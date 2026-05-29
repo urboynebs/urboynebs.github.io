@@ -3,28 +3,27 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>The Sealed Letter</title>
+<title>Dear Lance,</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  height:100vh;
+  min-height:100dvh;
   overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:radial-gradient(circle at top,#1a3a22,#0b1510,#050a07);
+  background:radial-gradient(circle at top,#19622a,#0b1510,#050a07);
   font-family:'Cormorant Garamond',serif;
   color:#f3eed9;
 }
 
-/* ---------- INTRO OVERLAY ---------- */
+/* ---------- INTRO ---------- */
 #intro{
   position:absolute;
   inset:0;
@@ -50,9 +49,7 @@ body{
   transition:0.3s;
 }
 
-.seal:hover{
-  transform:scale(1.1);
-}
+.seal:hover{transform:scale(1.1);}
 
 .sealText{
   font-size:14px;
@@ -64,15 +61,19 @@ body{
 .container{
   width:90%;
   max-width:800px;
+  max-height:85dvh;
+  overflow-y:auto;
+
   background:#f4e7c5;
   color:#2b2418;
   padding:50px;
   border-radius:10px;
   border:6px solid #8a6a3c;
   box-shadow:0 0 50px rgba(0,0,0,0.7);
+
   transform:scaleY(0);
   transform-origin:top;
-  transition:1.2s ease;
+  transition:1s cubic-bezier(.2,.8,.2,1);
   position:relative;
 }
 
@@ -80,7 +81,14 @@ body{
   transform:scaleY(1);
 }
 
-/* candle flicker */
+/* scrollbar */
+.container::-webkit-scrollbar{width:6px;}
+.container::-webkit-scrollbar-thumb{
+  background:#8a6a3c;
+  border-radius:10px;
+}
+
+/* candle glow */
 .container::before{
   content:"";
   position:absolute;
@@ -111,26 +119,21 @@ h1{
 /* ---------- MESSAGE ---------- */
 .message{
   opacity:0;
-  max-height:0;
-  overflow:hidden;
-  transition:1.2s ease;
+  transition:1s ease;
   line-height:1.9;
   font-size:1.2rem;
 }
 
-.message.show{
-  opacity:1;
-  max-height:2000px;
-}
+.message.show{opacity:1;}
 
-/* Spotify fade */
+/* Spotify */
 iframe{
   width:100%;
   border-radius:12px;
   margin-top:20px;
   opacity:0;
   transform:translateY(20px);
-  transition:1s ease 0.8s;
+  transition:1s ease 0.6s;
 }
 
 .message.show iframe{
@@ -152,91 +155,79 @@ iframe{
   from{transform:translateY(100vh);}
   to{transform:translateY(-10vh);}
 }
-
-/* ---------- AUDIO WARNING ---------- */
-.note{
-  font-size:12px;
-  text-align:center;
-  margin-top:10px;
-  opacity:0.6;
-}
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO (replace file if you want) -->
 <audio id="bgm" loop>
   <source src="ambient.mp3" type="audio/mp3">
 </audio>
 
-<!-- INTRO WAX SEAL -->
 <div id="intro">
   <div class="seal" onclick="openLetter()">
-    <div class="sealText">SEAL<br>CLICK TO OPEN</div>
+    <div class="sealText">Hey there, Lance.<br>CLICK HERE!</div>
   </div>
 </div>
 
-<!-- PARCHEMENT -->
 <div class="container" id="letter">
+  <h1>Dear Lance,</h1>
+  <div id="typing"></div>
 
-<h1>The Sealed Letter</h1>
-<div id="typing"></div>
+  <div class="message" id="message">
 
-<div class="message" id="message">
+    I don't know if I'm supposed to feel this way,<br>
+    The feeling of fear lingers deep within me.<br><br>
 
-In this quiet realm of fading light,
-I write what my heart has long withheld...<br><br>
+    You became a presence I cannot forget,<br>
+    a warmth I did not expect,<br>
+    yet deeply cherish.<br><br>
 
-You became a presence I cannot forget,
-a warmth I did not expect,
-yet deeply cherish.<br><br>
+    It took me quite some time to gather the courage to tell you this, because I don't want to lose you.<br><br>
 
-And so I confess beneath these wandering stars...<br><br>
+    <strong>I like you, Lance.</strong><br><br>
 
-<strong>I love you.</strong><br><br>
+    I hope this doesn't get between us as colleagues,<br>
+    I don't expect anything in return,<br>
+    only that nothing changes between us.<br><br>
 
-If fate allows it,
-I will choose you again,
-in every lifetime that follows.<br><br>
+    <iframe
+      src="https://open.spotify.com/embed/track/6wcjLOGIdmw8BUaRho4c9L?utm_source=generator"
+      height="352"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
 
-<!-- Spotify -->
-<iframe
-src="https://open.spotify.com/embed/track/6wcjLOGIdmw8BUaRho4c9L?utm_source=generator"
-height="352"
-allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-</iframe>
+    <div style="font-size:12px; text-align:center; margin-top:10px; opacity:0.6;">
+      — a letter sealed with the kiss you asked for when you were drunk
+    </div>
 
-<div class="note">— a letter sealed with truth</div>
-
-</div>
+  </div>
 </div>
 
 <script>
-
-/* OPEN LETTER */
 function openLetter(){
   document.getElementById("intro").style.display="none";
   document.getElementById("letter").classList.add("open");
   document.getElementById("message").classList.add("show");
 
   document.getElementById("bgm").play().catch(()=>{});
+
+  type();
 }
 
-/* TYPE EFFECT */
-const text = "A truth sealed beyond time...";
-let i=0;
+/* typing */
+const text = "29th day of May in the year 2026";
+let i = 0;
 
 function type(){
-  if(i<text.length){
+  if(i < text.length){
     document.getElementById("typing").innerHTML += text[i];
     i++;
-    setTimeout(type,60);
+    setTimeout(type, 60);
   }
 }
-type();
 
-/* RUNES */
+/* runes */
 const runes=["ᚠ","ᚢ","ᚦ","ᚨ","ᚱ","ᚲ","ᚷ","ᛁ","ᛃ","ᛉ"];
 
 function createRune(){
@@ -248,8 +239,7 @@ function createRune(){
   document.body.appendChild(r);
   setTimeout(()=>r.remove(),12000);
 }
-setInterval(createRune,400);
-
+setInterval(createRune,500);
 </script>
 
 </body>
