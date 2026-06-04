@@ -1,246 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dear Lance,</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Looking for something?</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 body{
-  min-height:100dvh;
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:radial-gradient(circle at top,#19622a,#0b1510,#050a07);
-  font-family:'Cormorant Garamond',serif;
-  color:#f3eed9;
+    min-height:100svh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:16px;
+    background:linear-gradient(135deg,#0a3d91,#4facfe);
+    font-family:Arial,sans-serif;
 }
 
-/* ---------- INTRO ---------- */
-#intro{
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle,#0d1f14,#050a07);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  z-index:10;
-}
-
-.seal{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  background:radial-gradient(circle,#7a2e2e,#3b0f0f);
-  box-shadow:0 0 25px rgba(255,80,80,0.4);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:'Cinzel',serif;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.seal:hover{transform:scale(1.1);}
-
-.sealText{
-  font-size:14px;
-  text-align:center;
-  color:#ffd7d7;
-}
-
-/* ---------- PARCHMENT ---------- */
 .container{
-  width:90%;
-  max-width:800px;
-  max-height:85dvh;
-  overflow-y:auto;
-
-  background:#f4e7c5;
-  color:#2b2418;
-  padding:50px;
-  border-radius:10px;
-  border:6px solid #8a6a3c;
-  box-shadow:0 0 50px rgba(0,0,0,0.7);
-
-  transform:scaleY(0);
-  transform-origin:top;
-  transition:1s cubic-bezier(.2,.8,.2,1);
-  position:relative;
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:24px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.2);
 }
 
-.container.open{
-  transform:scaleY(1);
-}
-
-/* scrollbar */
-.container::-webkit-scrollbar{width:6px;}
-.container::-webkit-scrollbar-thumb{
-  background:#8a6a3c;
-  border-radius:10px;
-}
-
-/* candle glow */
-.container::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at 30% 20%,rgba(255,230,150,0.25),transparent 60%);
-  animation:flicker 2.5s infinite;
-  pointer-events:none;
-}
-
-@keyframes flicker{
-  0%,100%{opacity:0.6;}
-  50%{opacity:0.9;}
-}
-
-/* ---------- TEXT ---------- */
 h1{
-  text-align:center;
-  font-family:'Cinzel',serif;
-  margin-bottom:10px;
+    color:white;
+    font-size:clamp(1.8rem, 6vw, 2.5rem);
+    line-height:1.2;
+    margin-bottom:12px;
 }
 
-#typing{
-  text-align:center;
-  margin-bottom:25px;
-  font-style:italic;
+p{
+    color:#e6f2ff;
+    font-size:1rem;
+    margin-bottom:20px;
 }
 
-/* ---------- MESSAGE ---------- */
-.message{
-  opacity:0;
-  transition:1s ease;
-  line-height:1.9;
-  font-size:1.2rem;
+.spotify-player{
+    width:100%;
+    height:152px;
+    border:none;
+    border-radius:12px;
+    display:block;
 }
 
-.message.show{opacity:1;}
-
-/* Spotify */
-iframe{
-  width:100%;
-  border-radius:12px;
-  margin-top:20px;
-  opacity:0;
-  transform:translateY(20px);
-  transition:1s ease 0.6s;
-}
-
-.message.show iframe{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* ---------- RUNES ---------- */
-.rune{
-  position:absolute;
-  color:#a6ff9a;
-  opacity:0.25;
-  font-size:18px;
-  animation:float 8s linear infinite;
-  pointer-events:none;
-}
-
-@keyframes float{
-  from{transform:translateY(100vh);}
-  to{transform:translateY(-10vh);}
+@media (min-width:768px){
+    .container{
+        max-width:500px;
+        padding:40px;
+    }
 }
 </style>
 </head>
-
 <body>
 
-<audio id="bgm" loop>
-  <source src="ambient.mp3" type="audio/mp3">
-</audio>
-
-<div id="intro">
-  <div class="seal" onclick="openLetter()">
-    <div class="sealText">Hey there, Lance.<br>Guess what?</div>
-  </div>
-</div>
-
-<div class="container" id="letter">
-  <h1>Dear Lance,</h1>
-  <div id="typing"></div>
-
-  <div class="message" id="message">
-
-    I don't know if I'm supposed to feel this way,<br>
-    The feeling of fear lingers deep within me.<br><br>
-
-    You became a presence I cannot forget,<br>
-    a warmth I did not expect,<br>
-    yet deeply cherish.<br><br>
-
-    It took me quite some time to gather the courage to tell you this, because I don't want to lose you.<br><br>
-
-    <strong>I like you, Lance.</strong><br><br>
-
-    I hope this doesn't get between us as colleagues,<br>
-    I don't expect anything in return,<br>
-    only that nothing changes between us.<br><br>
+<div class="container">
+    <h1>NOTHING TO SEE HERE</h1>
+    <p>Better luck next time</p>
 
     <iframe
-      src="https://open.spotify.com/embed/track/6wcjLOGIdmw8BUaRho4c9L?utm_source=generator"
-      height="352"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+        class="spotify-player"
+        src="https://open.spotify.com/embed/track/0620OecAlwJQxWieRW4L9s?utm_source=generator"
+        allowfullscreen
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
     </iframe>
-
-    <div style="font-size:12px; text-align:center; margin-top:10px; opacity:0.6;">
-      — a letter sealed with the kiss you asked for when we were both drunk
-    </div>
-
-  </div>
 </div>
-
-<script>
-function openLetter(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("letter").classList.add("open");
-  document.getElementById("message").classList.add("show");
-
-  document.getElementById("bgm").play().catch(()=>{});
-
-  type();
-}
-
-/* typing */
-const text = "29th day of May in the year 2026";
-let i = 0;
-
-function type(){
-  if(i < text.length){
-    document.getElementById("typing").innerHTML += text[i];
-    i++;
-    setTimeout(type, 60);
-  }
-}
-
-/* runes */
-const runes=["ᚠ","ᚢ","ᚦ","ᚨ","ᚱ","ᚲ","ᚷ","ᛁ","ᛃ","ᛉ"];
-
-function createRune(){
-  const r=document.createElement("div");
-  r.className="rune";
-  r.innerHTML=runes[Math.floor(Math.random()*runes.length)];
-  r.style.left=Math.random()*100+"vw";
-  r.style.animationDuration=(6+Math.random()*6)+"s";
-  document.body.appendChild(r);
-  setTimeout(()=>r.remove(),12000);
-}
-setInterval(createRune,500);
-</script>
 
 </body>
 </html>
